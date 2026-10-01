@@ -1,0 +1,35 @@
+/* Self-hosted, latin subset only. No third-party font requests. */
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("./fonts/fraunces-latin-full-normal.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("./fonts/fraunces-latin-full-italic.woff2") format("woff2-variations");
+}
+
+/* Atkinson Hyperlegible Next: designed by the Braille Institute for legibility.
+   Chosen on purpose for a site serving neurodivergent and low-vision readers. */
+@font-face {
+  font-family: "Atkinson Next";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("./fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Atkinson Next";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("./fonts/atkinson-hyperlegible-next-latin-wght-italic.woff2") format("woff2-variations");
+}
