@@ -19,14 +19,16 @@ export function practiceJsonLd() {
     "@type": "ProfessionalService",
     name: site.name,
     url: site.url,
-    founder: { "@type": "Person", name: site.clinician },
+    founder: { "@type": "Person", name: site.clinician, honorificSuffix: site.postNominals },
+    faxNumber: site.fax,
     areaServed: `${site.town}, ${site.state}`,
     address: {
       "@type": "PostalAddress",
       addressLocality: site.town,
       addressRegion: site.stateAbbr,
       addressCountry: "US",
-      // streetAddress: add once the practice address is confirmed
+      streetAddress: "4453 Penn Ave, Suite 4",
+      postalCode: "19608",
     },
   };
 }

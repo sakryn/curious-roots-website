@@ -80,8 +80,8 @@ export const faqCategories: FaqCategory[] = [
     label: "Sessions + location",
     items: [
       { id: "telehealth", q: "Do you offer telehealth?", a: "[CONFIRM telehealth availability and states served.]" },
-      { id: "in-person", q: "Do you offer in-person sessions?", a: "[CONFIRM in-person availability.] My office is in Sinking Spring." },
-      { id: "location", q: "Where is your office?", a: "Sinking Spring, Pennsylvania. [CONFIRM CURRENT PRACTICE ADDRESS WITH SARAH]" },
+      { id: "in-person", q: "Do you offer in-person sessions?", a: "[CONFIRM in-person availability.] My office is at 4453 Penn Ave, Suite 4, in Sinking Spring." },
+      { id: "location", q: "Where is your office?", a: "4453 Penn Ave, Suite 4, Sinking Spring, PA 19608." },
     ],
   },
   {

@@ -4,7 +4,6 @@ import { footerNav, legalNav } from "@/content/nav";
 import { site } from "@/config/site";
 import { Action } from "@/components/ui/Action";
 import { Rich } from "@/components/ui/Rich";
-import { PrototypeNote } from "@/components/ui/PrototypeNote";
 import { Meadow, type MeadowStem } from "@/components/botanicals/Motion";
 import { Logo } from "./Header";
 
@@ -35,9 +34,10 @@ export function Footer() {
         <div className="site-footer__brand">
           <Logo />
           <p>
-            {site.clinician}
+            {site.clinician}, {site.postNominals}
             <br />
-            {site.town}, {site.state}
+            {site.address}
+
           </p>
           <dl className="site-footer__contact">
             <div>
@@ -65,8 +65,15 @@ export function Footer() {
         ))}
 
         <div className="site-footer__crisis">
-          <Rich text={site.crisisNotice} />
-          <PrototypeNote>Crisis and emergency wording should come from Sarah after clinical and legal review. Left blank on purpose.</PrototypeNote>
+          <h2>{site.crisisHeading}</h2>
+          <ul>
+            {site.crisisLines.map((c) => (
+              <li key={c.label}>
+                <strong>{c.label}</strong>
+                <span>{c.detail}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

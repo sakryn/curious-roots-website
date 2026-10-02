@@ -3385,3 +3385,19 @@ main:focus {
   .fit-col { grid-template-columns: 5.2rem 1fr; column-gap: 0.9rem; }
   .fit-col__art { width: 5.2rem; height: 6.5rem; }
 }
+.site-footer__crisis h2 {
+  font-family: var(--f-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #d9c9a6;
+  margin-bottom: 0.7rem;
+}
+.site-footer__crisis li { display: grid; gap: 0.05rem; padding: 0.45rem 0; border-top: 1px solid rgba(239, 232, 214, 0.14); }
+.site-footer__crisis li:first-child { border-top: 0; padding-top: 0; }
+.site-footer__crisis strong { color: var(--on-dark); font-weight: 600; }
+.site-footer__crisis span { color: var(--on-dark-soft); }
+.credentials__list { flex-direction: column; gap: 0; }
+.credentials__list li { padding: 0.45rem 0; border-top: 1px solid var(--rule); }
+.credentials__list li:first-child { border-top: 0; }
