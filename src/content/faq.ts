@@ -32,7 +32,7 @@ export const faqCategories: FaqCategory[] = [
       {
         id: "contact-best",
         q: "What's the best way to reach you?",
-        a: "Text or the contact form. I'm a solo practice with no front desk, and I can't answer the phone while I'm in session, so calls go to voicemail. A text reaches me faster, and we can always schedule a time to talk by phone.",
+        a: "Text 484-650-3368 or send a note through the contact form. If you'd like to talk by phone, send a text and we'll find a time.",
       },
       {
         id: "hours",

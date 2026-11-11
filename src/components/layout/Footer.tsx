@@ -54,7 +54,6 @@ export function Footer() {
               <dt>Text line</dt>
               <dd>
                 <a href={site.textLineHref}>{site.textLine}</a>
-                <span className="site-footer__note">Texts reach me faster than calls.</span>
               </dd>
             </div>
             <div>

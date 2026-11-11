@@ -130,10 +130,6 @@ export function Location({ n = "X" }: { n?: string }) {
               Contact + waitlist form
             </Action>
           </div>
-          <div className="location__privacy">
-            <h3>{location.textHeading}</h3>
-            <p>{location.textBody}</p>
-          </div>
         </div>
       </div>
     </section>

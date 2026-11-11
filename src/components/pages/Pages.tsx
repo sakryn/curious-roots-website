@@ -126,7 +126,7 @@ function ClosingCta() {
           </Action>
         </div>
         <p className="closing__text">
-          Or text <a href={site.textLineHref}>{site.textLine}</a>. Texts reach me faster than calls.
+          Or text <a href={site.textLineHref}>{site.textLine}</a>.
         </p>
       </Reveal>
     </section>

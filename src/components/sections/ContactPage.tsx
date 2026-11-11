@@ -21,7 +21,7 @@ const WAYS = [
     flower: "lilac" as const,
     n: "ii",
     title: "Text the practice line",
-    body: "I can't answer calls while I'm in session, and there's no front desk. A text reaches me faster, and we'll set up a time to talk by phone.",
+    body: "Texting is the quickest way to reach me. Send a text and we'll find a time to talk.",
     action: { link: "textLine" as const, label: `Text ${site.textLine}` },
   },
   {

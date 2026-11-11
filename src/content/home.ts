@@ -86,7 +86,7 @@ export const steps = {
     },
     {
       title: "I follow up personally",
-      body: "There's no front desk here. I read every message myself and get back to you as soon as I'm out of session.",
+      body: "I read every message myself and will get back to you personally.",
       note: null as string | null,
     },
     {
@@ -126,9 +126,6 @@ export const location = {
   textLabel: "Text line",
   faxLabel: "Fax",
   hoursLabel: "Hours",
-  textHeading: "Why a text line?",
-  textBody:
-    "I'm a solo practice with no one at a front desk, and I can't pick up while I'm in session. Calls go to voicemail; a text reaches me faster. Send me a text and we'll find a time to talk.",
 };
 
 export const education = {
