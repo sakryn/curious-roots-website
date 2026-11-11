@@ -68,11 +68,11 @@ export function HowIWork() {
   return (
     <section className="section approach" aria-labelledby="approach-title">
       <Parallax speed={0.3} className="approach__ghost">
-        <Flower kind="umbelDry" sketch className="plant--ghost" seed={9} />
+        <Flower kind="daisy" sketch className="plant--ghost" seed={9} />
       </Parallax>
       <div className="wrap">
         <Reveal className="section-head section-head--center">
-          <Label n="III">The approach</Label>
+          <Label n="IV">The approach</Label>
           <h2 id="approach-title" className="section-title">
             {approach.heading}
           </h2>
@@ -98,7 +98,7 @@ export function HowIWork() {
                 const hairs = `M${hx} ${hy} l${dir * 8} ${-6} M${hx + dir * 14} ${hy + (y - geo.cy) * 0.12} l${dir * 6} 7 M${hx - dir * 16} ${hy - (y - geo.cy) * 0.1} l${dir * 5} -8`;
                 const cls = `approach__link ${hot === i ? "is-hot" : ""}`;
                 const draw = still
-                  ? {}
+                  ? { initial: { pathLength: 1 }, animate: { pathLength: 1 } }
                   : {
                       initial: { pathLength: 0 },
                       whileInView: { pathLength: 1 },

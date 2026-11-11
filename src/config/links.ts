@@ -1,14 +1,16 @@
+import { site } from "./site";
+
 /**
- * Every button and link on the site points at one of these keys.
- *
- * To go live: fill in `href`. That's it. The <Action> component renders a real
- * link as soon as an href exists and `site.prototypeMode` is false.
- *
- * `prototypeNote` is what Sarah sees when she taps the button in the prototype.
+ * Every button and link on the site points at one of these keys,
+ * so a URL only ever needs changing in one place.
  */
 export type LinkKey =
   | "requestAppointment"
   | "patientPortal"
+  | "contact"
+  | "waitlist"
+  | "textLine"
+  | "directions"
   | "meetSarah"
   | "home"
   | "therapy"
@@ -19,45 +21,53 @@ export type LinkKey =
   | "about"
   | "partnerships"
   | "faq"
+  | "insurance"
   | "consultation"
   | "privacy"
   | "accessibility"
-  | "terms"
   | "partnerAdalynRose"
   | "partnerCatapallo";
 
 export interface LinkTarget {
-  /** Where this goes once live. `null` = not decided yet. */
+  /** Where this goes. `null` = not decided yet (renders as a highlighted placeholder). */
   href: string | null;
-  /** Opens in a new tab (EHR, partner sites). */
+  /** Opens in a new tab (Jane, partner sites). */
   external?: boolean;
   /** Analytics event name, used by src/lib/analytics.ts. */
   event: string;
-  /** What the prototype tells Sarah this button will do. */
+  /** Only used if prototypeMode is switched back on. */
   prototypeNote: string;
 }
 
 export const links: Record<LinkKey, LinkTarget> = {
   requestAppointment: {
-    href: null, // e.g. the EHR's secure intake / appointment-request URL
+    href: site.jane,
     external: true,
-    event: "cta_request_appointment",
-    prototypeNote:
-      "Opens your secure intake form in your EHR. Requests land with you for review; nobody books themselves into your calendar.",
+    event: "cta_book",
+    prototypeNote: "Opens Sarah's Jane booking site.",
   },
   patientPortal: {
-    href: null, // e.g. the EHR's client portal login URL
+    href: site.jane,
     external: true,
-    event: "cta_patient_portal",
-    prototypeNote: "Opens your EHR's client portal login.",
+    event: "cta_client_portal",
+    prototypeNote: "Opens Jane, where current clients sign in.",
   },
-  meetSarah: { href: "/about", event: "nav_about", prototypeNote: "Goes to your full About page." },
+  contact: { href: "/contact", event: "nav_contact", prototypeNote: "Goes to the contact page." },
+  waitlist: { href: "/contact#reach-out", event: "cta_waitlist", prototypeNote: "Goes to the contact + waitlist form." },
+  textLine: { href: site.textLineHref, event: "cta_text_line", prototypeNote: "Opens a text message to Sarah." },
+  directions: {
+    href: site.mapsUrl,
+    external: true,
+    event: "cta_directions",
+    prototypeNote: "Opens directions in Google Maps.",
+  },
+  meetSarah: { href: "/about", event: "nav_about", prototypeNote: "Goes to the About page." },
   home: { href: "/", event: "nav_home", prototypeNote: "Goes to the homepage." },
-  therapy: { href: "/therapy", event: "nav_therapy", prototypeNote: "Goes to the Therapy overview page." },
+  therapy: { href: "/therapy", event: "nav_therapy", prototypeNote: "Goes to the Services page." },
   neurodivergence: {
-    href: "/adhd-autism-neurodivergence",
+    href: "/adhd-neurodivergence",
     event: "nav_neurodivergence",
-    prototypeNote: "Goes to the ADHD + autism page.",
+    prototypeNote: "Goes to the ADHD + neurodivergence page.",
   },
   trauma: { href: "/trauma-therapy", event: "nav_trauma", prototypeNote: "Goes to the trauma therapy page." },
   childrenFamilies: {
@@ -66,26 +76,22 @@ export const links: Record<LinkKey, LinkTarget> = {
     prototypeNote: "Goes to the children, teens + families page.",
   },
   grief: { href: "/grief", event: "nav_grief", prototypeNote: "Goes to the grief + transitions page." },
-  about: { href: "/about", event: "nav_about", prototypeNote: "Goes to your full About page." },
+  about: { href: "/about", event: "nav_about", prototypeNote: "Goes to the About page." },
   partnerships: { href: "/partnerships", event: "nav_partnerships", prototypeNote: "Goes to the Partnerships page." },
-  faq: { href: "/faq", event: "nav_faq", prototypeNote: "Goes to the full FAQ page." },
+  faq: { href: "/faq", event: "nav_faq", prototypeNote: "Goes to the FAQ." },
+  insurance: { href: "/therapy#insurance", event: "nav_insurance", prototypeNote: "Goes to insurance + rates." },
   consultation: {
     href: "/consultation-training",
     event: "nav_consultation",
-    prototypeNote: "Goes to the Education + Consultation page, separate from therapy intake.",
+    prototypeNote: "Goes to the Consultation + Education page.",
   },
-  privacy: { href: null, event: "nav_privacy", prototypeNote: "Privacy policy page (copy pending review)." },
-  accessibility: {
-    href: null,
-    event: "nav_accessibility",
-    prototypeNote: "Accessibility statement page (copy pending review).",
-  },
-  terms: { href: null, event: "nav_terms", prototypeNote: "Terms + website disclaimer page (copy pending review)." },
+  privacy: { href: "/privacy", event: "nav_privacy", prototypeNote: "Privacy page." },
+  accessibility: { href: "/accessibility", event: "nav_accessibility", prototypeNote: "Accessibility page." },
   partnerAdalynRose: {
-    href: null,
+    href: "https://www.adalynrose.org",
     external: true,
     event: "partner_adalyn_rose",
-    prototypeNote: "Opens the Adalyn Rose Foundation / Keegan Cares website.",
+    prototypeNote: "Opens the Adalyn Rose Foundation website.",
   },
   partnerCatapallo: {
     href: "https://www.catapallovr.com",

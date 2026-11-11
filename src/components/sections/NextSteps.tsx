@@ -24,7 +24,7 @@ export function NextSteps() {
       <RootGrow variant="low" className="steps__roots" />
       <div className="wrap">
         <Reveal className="section-head">
-          <Label n="IV">Beginning</Label>
+          <Label n="V">Beginning</Label>
           <h2 id="steps-title" className="section-title">
             {steps.heading}
           </h2>

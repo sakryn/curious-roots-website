@@ -12,11 +12,13 @@ import { Action } from "@/components/ui/Action";
 export function Faq({
   items,
   showHeading = true,
+  n = "IX",
   showAllLink = true,
 }: {
   /** Pass a subset (specialty pages) to skip the category picker. */
   items?: FaqItem[];
   showHeading?: boolean;
+  n?: string;
   showAllLink?: boolean;
 }) {
   const [cat, setCat] = useState(faqCategories[0].id);
@@ -27,7 +29,7 @@ export function Faq({
       <div className="wrap faq__grid">
         {showHeading && (
           <Reveal className="section-head faq__head">
-            <Label n="VII">Questions</Label>
+            <Label n={n}>Questions</Label>
             <h2 id="faq-title" className="section-title">
               {faqCopy.heading}
             </h2>

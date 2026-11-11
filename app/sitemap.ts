@@ -6,12 +6,15 @@ const paths = [
   "/about",
   "/therapy",
   "/trauma-therapy",
-  "/adhd-autism-neurodivergence",
+  "/adhd-neurodivergence",
   "/children-teens-families",
   "/grief",
   "/consultation-training",
   "/partnerships",
   "/faq",
+  "/contact",
+  "/privacy",
+  "/accessibility",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

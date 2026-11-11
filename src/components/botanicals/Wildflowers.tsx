@@ -29,7 +29,10 @@ export type PlantKind =
   | "bell"
   | "hellebore"
   | "rose"
-  | "vine";
+  | "vine"
+  | "daisy"
+  | "lilac"
+  | "dandelion";
 
 interface El {
   d: string;
@@ -597,7 +600,168 @@ function vine(r: Rng): Out {
   return o;
 }
 
+/* ---------- Sarah's flowers: daisy, lilac sprig, dandelion (from her logo) ---------- */
+
+/** A narrow strap-shaped petal from radius r0 to r1 at angle a, squashed vertically by k. */
+function petal(C: Pt, a: number, r0: number, r1: number, w: number, k = 1): string {
+  const P = (rad: number, off: number): string => {
+    const x = C[0] + Math.cos(a) * rad - Math.sin(a) * off;
+    const y = C[1] + (Math.sin(a) * rad + Math.cos(a) * off) * k;
+    return `${f(x)} ${f(y)}`;
+  };
+  const mid = (r0 + r1) / 2;
+  return `M${P(r0, 0)} Q${P(mid - 2, w)} ${P(r1 - 1, w * 0.7)} Q${P(r1 + 1, 0)} ${P(r1 - 1, -w * 0.7)} Q${P(mid - 2, -w)} ${P(r0, 0)}Z`;
+}
+
+function daisyHead(o: Out, C: Pt, R: number, r: Rng, tiltK = 0.82) {
+  const n = 15;
+  const rot = r() * Math.PI;
+  for (let k = 0; k < n; k++) {
+    const a = rot + (k / n) * Math.PI * 2 + (r() - 0.5) * 0.08;
+    const len = R * (0.9 + r() * 0.16);
+    const sh = petal(C, a, R * 0.22, len, R * 0.13, tiltK);
+    add(o, sh, "fl w-cream s2");
+    add(o, sh, "l l2 s2");
+    add(o, `M${f(C[0] + Math.cos(a) * R * 0.32)} ${f(C[1] + Math.sin(a) * R * 0.32 * tiltK)} L${f(C[0] + Math.cos(a) * len * 0.8)} ${f(C[1] + Math.sin(a) * len * 0.8 * tiltK)}`, "l l3 s3");
+  }
+  const disc = `M${f(C[0] - R * 0.26)} ${f(C[1])} a${f(R * 0.26)} ${f(R * 0.26 * tiltK)} 0 1 0 ${f(R * 0.52)} 0 a${f(R * 0.26)} ${f(R * 0.26 * tiltK)} 0 1 0 ${f(-R * 0.52)} 0`;
+  add(o, disc, "fl w-gold-solid s2");
+  add(o, disc, "fl hx s3");
+  add(o, disc, "l l2 sep s2");
+  for (let k = 0; k < 9; k++) {
+    const a = r() * Math.PI * 2;
+    const d = r() * R * 0.18;
+    add(o, ring(C[0] + Math.cos(a) * d, C[1] + Math.sin(a) * d * tiltK, 0.5), "l l3 sep s3");
+  }
+}
+
+function daisy(r: Rng): Out {
+  const o: Out = [];
+  const lean = (r() - 0.5) * 26;
+  const C: Pt = [60 + lean, 64 + r() * 18];
+  const stem = stemPts(r, BASE, [C[0], C[1] + 4], (r() - 0.5) * 14, 9);
+  stalk(o, r, stem, 0.9);
+  // narrow, lightly toothed leaves low on the stem
+  for (const t of [0.12, 0.26, 0.42]) {
+    const { p, ang } = pointAt(stem, t);
+    const s = t === 0.26 ? 1 : -1;
+    leaf(o, r, p, ang + s * 0.55, 30 - t * 26, 3.2, { veins: 2, serrate: true, hatch: s < 0 });
+  }
+  // a closed bud on a side shoot
+  if (r() < 0.75) {
+    const bs = pointAt(stem, 0.55);
+    const s = r() < 0.5 ? -1 : 1;
+    const b: Pt = [bs.p[0] + s * 20, bs.p[1] - 34];
+    add(o, `M${f(bs.p[0])} ${f(bs.p[1])} Q${f(bs.p[0] + s * 4)} ${f(bs.p[1] - 20)} ${f(b[0])} ${f(b[1])}`, "l l2 s1");
+    const bud = `M${f(b[0])} ${f(b[1])} c-3.6 -1 -4.2 -8 0 -10 c4.2 2 3.6 9 0 10z`;
+    add(o, bud, "fl w-sage s2");
+    add(o, bud, "l l2 s2");
+    add(o, `M${f(b[0])} ${f(b[1])} l-2.4 -6 M${f(b[0])} ${f(b[1])} l2.4 -6`, "l l3 s3");
+  }
+  daisyHead(o, C, 21 + r() * 4, r);
+  return o;
+}
+
+function lilac(r: Rng): Out {
+  const o: Out = [];
+  const lean = (r() - 0.5) * 30;
+  const top: Pt = [60 + lean, 40 + r() * 20];
+  const stem = stemPts(r, BASE, top, (r() - 0.5) * 22, 11);
+  add(o, smooth(stem), "l l1 s0");
+  // paired lance leaves on the lower stem
+  for (const t of [0.18, 0.32, 0.46]) {
+    const { p, ang } = pointAt(stem, t);
+    leaf(o, r, p, ang - 0.6, 26 - t * 18, 3.4, { veins: 2, hatch: t === 0.32, wash: "w-sage", shape: 1.05 });
+    leaf(o, r, p, ang + 0.6, 24 - t * 18, 3.2, { veins: 2, wash: "w-sage", shape: 1.05 });
+  }
+  // the flowering spike: small cupped blossoms, largest low, buds at the tip
+  const N = 13;
+  for (let i = 0; i < N; i++) {
+    const t = 0.56 + (i / (N - 1)) * 0.43;
+    const { p, ang } = pointAt(stem, Math.min(0.995, t));
+    const s = i % 2 ? 1 : -1;
+    const size = 7.4 - (i / N) * 4.2;
+    const out = ang + s * (1.05 - (i / N) * 0.35);
+    const pedicel: Pt = [p[0] + Math.cos(out) * size * 0.9, p[1] + Math.sin(out) * size * 0.9];
+    add(o, `M${f(p[0])} ${f(p[1])} L${f(pedicel[0])} ${f(pedicel[1])}`, "l l3 s2");
+    const [x, y] = pedicel;
+    const ca = Math.cos(out + Math.PI / 2);
+    const sa = Math.sin(out + Math.PI / 2);
+    const T = (dx: number, dy: number): string => `${f(x + dx * ca - dy * sa)} ${f(y + dx * sa + dy * ca)}`;
+    const w = size * 0.55;
+    const bloom =
+      i > N - 4
+        ? `M${T(0, 0)} C${T(-w, -size * 0.3)} ${T(-w * 0.7, -size)} ${T(0, -size * 1.05)} C${T(w * 0.7, -size)} ${T(w, -size * 0.3)} ${T(0, 0)}Z`
+        : `M${T(0, 0)} C${T(-w * 1.2, -size * 0.2)} ${T(-w * 1.25, -size * 0.85)} ${T(-w * 0.55, -size)} L${T(-w * 0.15, -size * 0.75)} L${T(0, -size * 1.05)} L${T(w * 0.15, -size * 0.75)} L${T(w * 0.55, -size)} C${T(w * 1.25, -size * 0.85)} ${T(w * 1.2, -size * 0.2)} ${T(0, 0)}Z`;
+    add(o, bloom, "fl w-lilac s2");
+    add(o, bloom, "l l2 s2");
+    if (i < N - 4) add(o, `M${T(0, -0.6)} L${T(0, -size * 0.7)}`, "l l3 s3");
+  }
+  return o;
+}
+
+function dandelion(r: Rng): Out {
+  const o: Out = [];
+  // basal rosette of toothed leaves
+  for (let k = 0; k < 4; k++) {
+    const s = k % 2 ? 1 : -1;
+    const a = -Math.PI / 2 + s * (0.35 + k * 0.18 + r() * 0.1);
+    const len = 70 + r() * 30;
+    const base: Pt = [60, 318];
+    const ax: Pt[] = [];
+    const L: Pt[] = [];
+    const R: Pt[] = [];
+    const n = 14;
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      const q: Pt = [base[0] + Math.cos(a) * len * t, base[1] + Math.sin(a) * len * t];
+      ax.push(q);
+      const tooth = i % 3 === 1 ? 1.9 : i % 3 === 2 ? 0.5 : 0.9;
+      const w = 7.5 * Math.sin(Math.PI * Math.min(1, t * 1.1)) * tooth * (1 - t * 0.3);
+      const nx = -Math.sin(a);
+      const ny = Math.cos(a);
+      L.push([q[0] + nx * w, q[1] + ny * w]);
+      R.push([q[0] - nx * w, q[1] - ny * w]);
+    }
+    L[0] = R[0] = ax[0];
+    L[n] = R[n] = ax[n];
+    const sh = closed(L, [...R].reverse());
+    add(o, sh, "fl w-sage s0");
+    if (k % 2) add(o, closed(L, [...ax].reverse()), "fl hf s1");
+    add(o, sh, "l l2 s0");
+    add(o, smooth(ax.slice(0, n)), "l l3 s1");
+  }
+  const lean = (r() - 0.5) * 22;
+  const C: Pt = [60 + lean, 98 + r() * 16];
+  const stem = stemPts(r, BASE, [C[0], C[1] + 6], (r() - 0.5) * 12, 9);
+  stalk(o, r, stem, 1.4, "l2");
+  // reflexed bracts under the head
+  for (let k = 0; k < 7; k++) {
+    const a = Math.PI / 2 + (k - 3) * 0.32;
+    add(o, `M${f(C[0])} ${f(C[1] + 4)} q${f(Math.cos(a) * 6)} ${f(2)} ${f(Math.cos(a) * 10)} ${f(Math.sin(a) * 9)}`, "l l3 s2");
+  }
+  // three rings of strap florets, outer first
+  const rings: [number, number, number][] = [
+    [24, 22, 0.8],
+    [19, 17, 0.62],
+    [12, 13, 0.42],
+  ];
+  rings.forEach(([n, R, w], ri) => {
+    for (let k = 0; k < n; k++) {
+      const a = (k / n) * Math.PI * 2 + ri * 0.13 + (r() - 0.5) * 0.06;
+      const sh = petal(C, a, R * 0.15, R * (0.92 + r() * 0.12), 1.6 * (1 + w), 0.72);
+      add(o, sh, "fl w-gold s2");
+      add(o, sh, `l ${ri === 0 ? "l2" : "l3"} s${ri === 2 ? 3 : 2}`);
+    }
+  });
+  add(o, ring(C[0], C[1], 2.4), "fl w-gold-solid s3");
+  return o;
+}
+
 const builders: Record<PlantKind, (r: Rng) => Out> = {
+  daisy,
+  lilac,
+  dandelion,
   fern: (r) => fern(r),
   umbel: (r) => umbel(r),
   umbelDry: (r) => umbel(r, true),
@@ -701,21 +865,21 @@ export function InkDefs() {
     <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
       <defs>
         <pattern id="ink-hatch" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
-          <line x1="0" y1="0" x2="0" y2="2.4" stroke="#5b4634" strokeWidth="0.5" />
+          <line x1="0" y1="0" x2="0" y2="2.4" stroke="#5f4a3c" strokeWidth="0.5" />
         </pattern>
         <pattern id="ink-cross" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
-          <line x1="0" y1="0" x2="0" y2="2.6" stroke="#5b4634" strokeWidth="0.45" />
-          <line x1="0" y1="0" x2="2.6" y2="0" stroke="#5b4634" strokeWidth="0.35" />
+          <line x1="0" y1="0" x2="0" y2="2.6" stroke="#5f4a3c" strokeWidth="0.45" />
+          <line x1="0" y1="0" x2="2.6" y2="0" stroke="#5f4a3c" strokeWidth="0.35" />
         </pattern>
         <pattern id="ink-hatch-light" width="2.4" height="2.4" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
-          <line x1="0" y1="0" x2="0" y2="2.4" stroke="#b7c19a" strokeWidth="0.5" />
+          <line x1="0" y1="0" x2="0" y2="2.4" stroke="#a9b49f" strokeWidth="0.5" />
         </pattern>
         <pattern id="ink-cross-light" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
-          <line x1="0" y1="0" x2="0" y2="2.6" stroke="#b7c19a" strokeWidth="0.45" />
-          <line x1="0" y1="0" x2="2.6" y2="0" stroke="#b7c19a" strokeWidth="0.35" />
+          <line x1="0" y1="0" x2="0" y2="2.6" stroke="#a9b49f" strokeWidth="0.45" />
+          <line x1="0" y1="0" x2="2.6" y2="0" stroke="#a9b49f" strokeWidth="0.35" />
         </pattern>
         <pattern id="ink-hatch-wide" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)">
-          <line x1="0" y1="0" x2="0" y2="5" stroke="#6b5038" strokeWidth="0.6" />
+          <line x1="0" y1="0" x2="0" y2="5" stroke="#765d4c" strokeWidth="0.6" />
         </pattern>
       </defs>
     </svg>

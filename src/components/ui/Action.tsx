@@ -1,13 +1,14 @@
 "use client";
 
 import type { ReactNode, MouseEvent } from "react";
+import Link from "next/link";
 import { links, type LinkKey } from "@/config/links";
 import { site } from "@/config/site";
 import { track } from "@/lib/analytics";
 import { useExperience } from "@/lib/experience";
 import { Sprout } from "@/components/botanicals/Glyphs";
 
-type Variant = "primary" | "secondary" | "quiet" | "light" | "text";
+type Variant = "primary" | "secondary" | "quiet" | "light" | "text" | "accent";
 
 interface ActionProps {
   link: LinkKey;
@@ -21,35 +22,41 @@ interface ActionProps {
 
 /**
  * The one component every button and link on the site goes through.
- *
- * Prototype mode: renders a <button> that explains where it will go.
- * Live mode: renders a real <a> to the URL in src/config/links.ts.
+ * URLs live in src/config/links.ts.
  */
 export function Action({ link, children, variant = "primary", className = "", sprout, onAfter }: ActionProps) {
   const target = links[link];
   const { showToast } = useExperience();
   const cls = `action action--${variant} ${className}`.trim();
-  const showSprout = sprout ?? variant === "primary";
+  const showSprout = sprout ?? (variant === "primary" || variant === "accent");
 
   const inner = (
     <>
       {showSprout && <Sprout className="action__sprout" />}
       <span className="action__label">{children}</span>
+      {target.external && <span className="sr-only"> (opens in a new tab)</span>}
     </>
   );
 
-  const live = !site.prototypeMode && target.href;
-
-  if (live) {
+  if (!site.prototypeMode && target.href) {
+    const href = target.href;
+    const onClick = () => {
+      track(target.event);
+      onAfter?.();
+    };
+    if (href.startsWith("/")) {
+      return (
+        <Link className={cls} href={href} onClick={onClick}>
+          {inner}
+        </Link>
+      );
+    }
     return (
       <a
         className={cls}
-        href={target.href!}
+        href={href}
         {...(target.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        onClick={() => {
-          track(target.event);
-          onAfter?.();
-        }}
+        onClick={onClick}
       >
         {inner}
       </a>

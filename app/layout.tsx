@@ -11,13 +11,17 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description:
-    "Trauma-informed, neurodivergent-affirming therapy for children, teens, adults and families with Sarah Snyder in Sinking Spring, Pennsylvania.",
+    "Healing from the roots up. Trauma-informed, neurodivergent-affirming therapy for children, teens and adults with Sarah Snyder, LCSW, in Sinking Spring, PA and by telehealth across Pennsylvania.",
   robots: site.noIndex ? { index: false, follow: false } : undefined,
-  icons: { icon: "/icon.svg" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    images: [{ url: "/images/og.jpg", width: 1200, height: 630, alt: "Curious Roots Wellness" }],
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#EFE8D6",
+  themeColor: "#F8F6F1",
   width: "device-width",
   initialScale: 1,
 };

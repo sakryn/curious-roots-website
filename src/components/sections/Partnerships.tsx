@@ -17,7 +17,7 @@ export function Partnerships({ showHeading = true }: { showHeading?: boolean }) 
       <div className="wrap">
         {showHeading && (
           <Reveal className="section-head">
-            <Label n="VI">Partners</Label>
+            <Label n="VIII">Partners</Label>
             <h2 id="partners-title" className="section-title">
               {partnershipsCopy.heading}
             </h2>
@@ -38,9 +38,12 @@ export function Partnerships({ showHeading = true }: { showHeading?: boolean }) 
                     {p.status && <span className="partner__status">{p.status}</span>}
                   </p>
                   <h3 className="partner__name">{p.name}</h3>
-                  <div className="partner__logo" aria-hidden="true">
-                    {p.logo ? <img src={p.logo} alt="" /> : <span>Logo</span>}
-                  </div>
+                  {p.logo && (
+                    <div className="partner__logo" aria-hidden="true">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={p.logo} alt="" />
+                    </div>
+                  )}
                   <p>
                     <Rich text={p.body} />
                   </p>

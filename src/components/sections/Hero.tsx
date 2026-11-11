@@ -13,22 +13,22 @@ import { useStillness } from "@/lib/experience";
  */
 const HERO_MEADOW: MeadowStem[] = [
   // far left, faint
-  { kind: "grass", left: 2.5, h: 7, layer: 0, sketch: true, hideOnMobile: true, seed: 4 },
-  { kind: "seedhead", left: 5, h: 9, layer: 0, sketch: true, hideOnMobile: true, tilt: -6, seed: 2 },
+  { kind: "daisy", left: 2.5, h: 7, layer: 0, sketch: true, hideOnMobile: true, seed: 4 },
+  { kind: "seedhead", left: 5.5, h: 9, layer: 0, sketch: true, hideOnMobile: true, tilt: -6, seed: 2 },
   // mid group
-  { kind: "umbelDry", left: 57, h: 11, layer: 0, sketch: true, hideOnMobile: true, seed: 5, tilt: 4 },
-  { kind: "grass", left: 60, h: 8, layer: 1, hideOnMobile: true, seed: 9 },
-  { kind: "pod", left: 64.5, h: 10.5, layer: 1, hideOnMobile: true, seed: 2, tilt: -3 },
-  { kind: "teasel", left: 69, h: 13.5, layer: 0, hideOnMobile: true, seed: 3 },
+  { kind: "umbel", left: 57, h: 11, layer: 0, sketch: true, hideOnMobile: true, seed: 5, tilt: 4 },
+  { kind: "daisy", left: 60.5, h: 8, layer: 1, hideOnMobile: true, seed: 9 },
+  { kind: "dandelion", left: 64.5, h: 8.5, layer: 1, hideOnMobile: true, seed: 2, tilt: -3 },
+  { kind: "lilac", left: 69, h: 13.5, layer: 0, hideOnMobile: true, seed: 3 },
   // the specimen group
-  { kind: "fern", left: 75, h: 12, layer: 1, tilt: -10, seed: 7 },
-  { kind: "umbel", left: 80, h: 19, layer: 0, seed: 3 },
-  { kind: "bell", left: 83.5, h: 11.5, layer: 2, seed: 6, tilt: 5 },
-  { kind: "grass", left: 86, h: 13, layer: 1, seed: 12 },
+  { kind: "daisy", left: 75, h: 12, layer: 1, tilt: -8, seed: 7 },
+  { kind: "lilac", left: 79.5, h: 19, layer: 0, seed: 3 },
+  { kind: "daisy", left: 83.5, h: 14.5, layer: 2, seed: 6, tilt: 5 },
+  { kind: "dandelion", left: 86.5, h: 10, layer: 1, seed: 12 },
   { kind: "seedhead", left: 89.5, h: 15, layer: 0, seed: 8, tilt: 4 },
-  { kind: "hellebore", left: 92.5, h: 8.5, layer: 2, seed: 4, tilt: -4 },
-  { kind: "fern", left: 96, h: 10, layer: 1, sketch: true, seed: 13, tilt: 12 },
-  { kind: "grass", left: 98.5, h: 7, layer: 2, seed: 15 },
+  { kind: "lilac", left: 92.5, h: 11, layer: 2, seed: 4, tilt: -4 },
+  { kind: "daisy", left: 96, h: 9, layer: 1, sketch: true, seed: 13, tilt: 10 },
+  { kind: "dandelion", left: 97, h: 6.5, layer: 2, seed: 15 },
 ];
 
 const HERO_ROOTS: RootOrigin[] = [
@@ -42,19 +42,21 @@ const HERO_ROOTS: RootOrigin[] = [
 
 export function Hero() {
   const still = useStillness();
-  const rise = (delay: number) =>
-    still
-      ? {}
-      : {
-          initial: { opacity: 0, y: 18 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 1, delay, ease: [0.22, 1, 0.36, 1] as const },
-        };
+  // Always declare initial + animate, so text can never get stuck invisible
+  // when a visitor's "calm motion" setting loads after the first paint.
+  const rise = (delay: number) => ({
+    initial: { opacity: 0, y: 18 },
+    animate: { opacity: 1, y: 0 },
+    transition: still ? { duration: 0 } : { duration: 1, delay, ease: [0.22, 1, 0.36, 1] as const },
+  });
 
   return (
     <section className="hero" aria-labelledby="hero-title">
+      <Parallax speed={0.18} className="hero__photo">
+        <span className="hero__photo-img" />
+      </Parallax>
       <Parallax speed={0.35} className="hero__drift hero__drift--a">
-        <Flower kind="fern" sketch className="plant--ghost" seed={21} />
+        <Flower kind="lilac" sketch className="plant--ghost" seed={21} />
       </Parallax>
       <Parallax speed={0.6} className="hero__drift hero__drift--b">
         <Flower kind="seedhead" sketch className="plant--ghost" seed={30} />
@@ -62,7 +64,7 @@ export function Hero() {
 
       <div className="hero__above">
         <motion.p className="hero__kicker" {...rise(0)}>
-          The private practice of Sarah Snyder
+          {hero.kicker}
         </motion.p>
         <h1 id="hero-title" className="hero__title">
           {hero.headline.map((line, i) => (
@@ -86,7 +88,7 @@ export function Hero() {
         <HeroRoots origins={HERO_ROOTS} delay={1.6} />
         <HeroTaproot />
         <p className="hero__plate" aria-hidden="true">
-          <span>Fig. 1.</span> Daucus carota, with companions, root systems intact
+          <span>Fig. 1.</span> Bellis, Syringa + Taraxacum, root systems intact
         </p>
         <div className="hero__copy">
           <motion.p className="hero__sub" {...rise(0.55)}>
@@ -94,6 +96,9 @@ export function Hero() {
           </motion.p>
           <motion.p className="hero__support" {...rise(0.7)}>
             {hero.support}
+          </motion.p>
+          <motion.p className="hero__where" {...rise(0.78)}>
+            {hero.where}
           </motion.p>
           <motion.div className="hero__ctas" data-hero-ctas {...rise(0.85)}>
             <Action link={hero.primary.link}>{hero.primary.label}</Action>

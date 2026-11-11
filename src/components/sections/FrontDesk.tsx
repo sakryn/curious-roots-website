@@ -23,13 +23,14 @@ import { Flower } from "@/components/botanicals/Wildflowers";
  */
 export function FrontDesk() {
   const [status, setStatus] = useState<AvailabilityStatus>(currentAvailability);
+  void setStatus;
   const state = availabilityStates[status];
 
   return (
     <section className="section desk" aria-labelledby="desk-title" id="availability">
       <div className="wrap">
         <Reveal className="section-head">
-          <Label n="V">Availability</Label>
+          <Label n="VI">Availability</Label>
           <h2 id="desk-title" className="section-title">
             {frontDesk.heading}
           </h2>
@@ -60,11 +61,21 @@ export function FrontDesk() {
                   </div>
                 </motion.div>
               </AnimatePresence>
-              {state.cta && (
-                <Action link={state.cta.link} className="availability__cta">
-                  {state.cta.label}
-                </Action>
-              )}
+              <div className="availability__ctas">
+                {state.cta && (
+                  <Action link={state.cta.link} className="availability__cta">
+                    {state.cta.label}
+                  </Action>
+                )}
+                {state.secondary && (
+                  <Action link={state.secondary.link} variant="secondary" sprout={false}>
+                    {state.secondary.label}
+                  </Action>
+                )}
+              </div>
+              <p className="availability__text">
+                Rather text? <a href={site.textLineHref}>{site.textLine}</a>
+              </p>
             </div>
 
             {site.prototypeMode && (
@@ -92,7 +103,7 @@ export function FrontDesk() {
 
           <Reveal className="desk-panel desk-panel--portal on-dark" delay={0.12}>
             <div className="desk-panel__art" aria-hidden="true">
-              <Flower kind="fern" seed={41} />
+              <Flower kind="lilac" seed={41} />
               <Flower kind="seedhead" seed={12} />
             </div>
             <h3 className="desk-panel__title">{frontDesk.portal.heading}</h3>

@@ -3,7 +3,6 @@
 import { location, education } from "@/content/home";
 import { site } from "@/config/site";
 import { Action } from "@/components/ui/Action";
-import { Rich } from "@/components/ui/Rich";
 import { Reveal } from "@/components/ui/Reveal";
 import { OfferingIcon } from "@/components/botanicals/Glyphs";
 import { Label } from "@/components/ui/Label";
@@ -73,7 +72,7 @@ function SurveyMap() {
 import { Flower } from "@/components/botanicals/Wildflowers";
 import { Parallax } from "@/components/botanicals/Motion";
 
-export function Location() {
+export function Location({ n = "X" }: { n?: string }) {
   return (
     <section className="section location" aria-labelledby="location-title">
       <div className="wrap location__grid">
@@ -81,14 +80,14 @@ export function Location() {
           <figure>
             <SurveyMap />
             <figcaption className="plate-caption">
-              <span>Pl. VIII.</span> {site.town}, {site.state}, after a survey sketch
+              <span>Pl. {n}.</span> {site.town}, {site.state}, after a survey sketch
             </figcaption>
           </figure>
         </Reveal>
 
         <div className="location__info">
           <Reveal>
-            <Label n="VIII">Location</Label>
+            <Label n={n}>Location</Label>
             <h2 id="location-title" className="section-title">
               {location.heading}
             </h2>
@@ -97,19 +96,43 @@ export function Location() {
             <div>
               <dt>{location.officeLabel}</dt>
               <dd>
-                <Rich text={site.address} />
+                {site.addressLines[0]}
+                <br />
+                {site.addressLines[1]}
+                <span className="location__hint">{site.landmark}</span>
+              </dd>
+            </div>
+            <div>
+              <dt>{location.textLabel}</dt>
+              <dd>
+                <a className="location__text" href={site.textLineHref}>
+                  {site.textLine}
+                </a>
               </dd>
             </div>
             <div>
               <dt>{location.faxLabel}</dt>
+              <dd>{site.fax}</dd>
+            </div>
+            <div>
+              <dt>{location.hoursLabel}</dt>
               <dd>
-                <Rich text={site.fax} />
+                {site.hours}
+                <span className="location__hint">{site.formats}</span>
               </dd>
             </div>
           </dl>
+          <div className="location__actions">
+            <Action link="directions" variant="secondary" sprout={false}>
+              Get directions
+            </Action>
+            <Action link="contact" variant="text" sprout={false} className="text-link">
+              Contact + waitlist form
+            </Action>
+          </div>
           <div className="location__privacy">
-            <h3>{location.privacyHeading}</h3>
-            <p>{location.privacyBody}</p>
+            <h3>{location.textHeading}</h3>
+            <p>{location.textBody}</p>
           </div>
         </div>
       </div>
@@ -124,14 +147,14 @@ export function Education() {
         <path d="M0 80 V40 C200 10 360 60 560 44 C780 26 940 0 1140 24 C1280 40 1380 30 1440 20 V80z" />
       </svg>
       <Parallax speed={0.2} className="education__ghost education__ghost--a">
-        <Flower kind="fern" sketch seed={51} />
+        <Flower kind="lilac" sketch seed={51} />
       </Parallax>
       <Parallax speed={0.4} className="education__ghost education__ghost--b">
-        <Flower kind="teasel" sketch seed={7} />
+        <Flower kind="daisy" sketch seed={7} />
       </Parallax>
       <div className="wrap education__grid">
         <Reveal className="education__intro">
-          <Label>For professionals</Label>
+          <Label>Consultation + education</Label>
           <h2 id="edu-title" className="section-title">
             {education.heading}
           </h2>

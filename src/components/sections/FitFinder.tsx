@@ -50,6 +50,12 @@ export function FitFinder({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
             <FitColumn key={s.id} s={s} index={i} active={active === i} onActive={(on) => setActive(on ? i : null)} />
           ))}
         </ul>
+        <Reveal className="fit__also">
+          <p>{fit.also}</p>
+          <Action link="therapy" variant="secondary" sprout={false}>
+            Explore all services
+          </Action>
+        </Reveal>
       </div>
     </section>
   );

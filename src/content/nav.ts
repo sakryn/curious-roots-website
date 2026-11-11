@@ -7,29 +7,34 @@ export interface NavItem {
 
 export const primaryNav: NavItem[] = [
   { label: "Home", link: "home" },
-  { label: "Therapy", link: "therapy" },
-  { label: "ADHD + Neurodivergence", link: "neurodivergence" },
-  { label: "About Sarah", link: "about" },
-  { label: "Partnerships", link: "partnerships" },
+  { label: "About", link: "about" },
+  { label: "Services", link: "therapy" },
+  { label: "Consultation + Education", link: "consultation" },
   { label: "FAQ", link: "faq" },
+  { label: "Contact", link: "contact" },
 ];
 
 export const footerNav: { heading: string; items: NavItem[] }[] = [
   {
-    heading: "For clients",
+    heading: "Start here",
     items: [
-      { label: "Request an appointment", link: "requestAppointment" },
-      { label: "Patient portal", link: "patientPortal" },
+      { label: "New here? Book now", link: "requestAppointment" },
+      { label: "Client portal", link: "patientPortal" },
+      { label: "Contact + waitlist", link: "contact" },
+      { label: "Insurance + rates", link: "insurance" },
       { label: "FAQ", link: "faq" },
     ],
   },
   {
-    heading: "The practice",
+    heading: "Services",
     items: [
-      { label: "About Sarah", link: "about" },
-      { label: "Therapy", link: "therapy" },
+      { label: "All services", link: "therapy" },
+      { label: "ADHD + neurodivergence", link: "neurodivergence" },
+      { label: "Trauma + the nervous system", link: "trauma" },
+      { label: "Children, teens + families", link: "childrenFamilies" },
+      { label: "Grief + life transitions", link: "grief" },
+      { label: "Consultation + education", link: "consultation" },
       { label: "Partnerships", link: "partnerships" },
-      { label: "Professional consultation", link: "consultation" },
     ],
   },
 ];
@@ -37,5 +42,4 @@ export const footerNav: { heading: string; items: NavItem[] }[] = [
 export const legalNav: NavItem[] = [
   { label: "Privacy", link: "privacy" },
   { label: "Accessibility", link: "accessibility" },
-  { label: "Terms + website disclaimer", link: "terms" },
 ];

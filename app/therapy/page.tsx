@@ -1,23 +1,36 @@
 import { InnerPage, PageHeader } from "@/components/pages/Pages";
 import { FitFinder } from "@/components/sections/FitFinder";
-import { HowIWork } from "@/components/sections/HowIWork";
+import { IndividualTherapy, TherapyLooks, InsurancePanel, KeeganCares, NotSure } from "@/components/sections/Extras";
 import { NextSteps } from "@/components/sections/NextSteps";
+import { Action } from "@/components/ui/Action";
+import { services } from "@/content/services";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta(
-  "Therapy",
-  "Therapy for trauma, ADHD, autism, grief and emotional regulation with Sarah Snyder in Sinking Spring, PA.",
+  "Services",
+  "Therapy for ADHD, trauma, anxiety, grief, children, teens and families, plus ADHD assessments, with Sarah Snyder, LCSW, in Sinking Spring, PA and by telehealth across Pennsylvania.",
   "/therapy",
 );
 
 export default function Page() {
   return (
     <>
-      <PageHeader title="Therapy" intro="Who I work with, how I work, and what starting looks like." flower="fern" />
-      <InnerPage>
+      <PageHeader title={services.heading} kicker="Services" intro={services.intro} flower="lilac">
+        <div className="page-head__actions">
+          <Action link="requestAppointment">New here? Book now</Action>
+          <Action link="insurance" variant="secondary" sprout={false}>
+            Insurance + rates
+          </Action>
+        </div>
+      </PageHeader>
+      <InnerPage closing={false}>
         <FitFinder />
-        <HowIWork />
+        <IndividualTherapy />
+        <TherapyLooks n="III" />
         <NextSteps />
+        <InsurancePanel n="V" />
+        <KeeganCares />
+        <NotSure heading={services.notSure.heading} body={services.notSure.body} />
       </InnerPage>
     </>
   );

@@ -5,9 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { primaryNav } from "@/content/nav";
 import { site } from "@/config/site";
 import { Action } from "@/components/ui/Action";
-import { LogoMark } from "@/components/botanicals/Glyphs";
 import { Flower } from "@/components/botanicals/Wildflowers";
 import { useExperience } from "@/lib/experience";
+import { ComfortButton } from "@/components/ui/ReadingComfort";
 
 export function PrototypeBar() {
   const { notes, setNotes } = useExperience();
@@ -25,33 +25,20 @@ export function PrototypeBar() {
   );
 }
 
-export function Logo() {
+export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <span className="logo">
-      <LogoMark className="logo__mark" />
-      <span className="logo__words">
-        <span className="logo__name">Curious Roots</span>
-        <span className="logo__sub">Wellness</span>
-      </span>
+    <span className={`logo ${light ? "logo--light" : ""}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="logo__mark-img" src="/brand/mark.png" alt="" width={400} height={481} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className="logo__words-img"
+        src={light ? "/brand/wordmark-light.png" : "/brand/wordmark.png"}
+        alt="Curious Roots Wellness"
+        width={800}
+        height={182}
+      />
     </span>
-  );
-}
-
-function CalmToggle({ withLabel = false }: { withLabel?: boolean }) {
-  const { calm, setCalm } = useExperience();
-  return (
-    <button
-      type="button"
-      className={`calm-toggle ${withLabel ? "calm-toggle--labeled" : ""}`}
-      aria-pressed={calm}
-      onClick={() => setCalm(!calm)}
-      title={calm ? "Motion is calmed. Turn animation back on." : "Calm the motion on this site"}
-    >
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        {calm ? <path d="M4 12 H20" /> : <path d="M3 12 C6 6 9 6 12 12 S18 18 21 12" />}
-      </svg>
-      <span className={withLabel ? "" : "sr-only"}>{calm ? "Calm motion is on" : "Calm motion"}</span>
-    </button>
   );
 }
 
@@ -73,7 +60,6 @@ export function Header() {
         <div className="site-header__inner">
           <Action link="home" variant="text" sprout={false} className="site-header__home">
             <Logo />
-            <span className="sr-only">Curious Roots Wellness home</span>
           </Action>
 
           <nav className="site-nav" aria-label="Main">
@@ -89,12 +75,12 @@ export function Header() {
           </nav>
 
           <div className="site-header__actions">
-            <CalmToggle />
-            <Action link="patientPortal" variant="quiet" className="site-header__portal">
-              Patient portal
+            <ComfortButton />
+            <Action link="patientPortal" variant="quiet" className="site-header__portal" sprout={false}>
+              Client portal
             </Action>
             <Action link="requestAppointment" className="site-header__cta">
-              Request an appointment
+              Book now
             </Action>
             <button
               type="button"
@@ -203,16 +189,19 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.4 }}
           >
-            <Action link="requestAppointment">Request an appointment</Action>
+            <Action link="requestAppointment">New here? Book now</Action>
             <Action link="patientPortal" variant="secondary" sprout={false}>
-              Patient portal
+              Client portal
             </Action>
-            <CalmToggle withLabel />
+            <Action link="textLine" variant="text" sprout={false} className="mobile-menu__text">
+              Text line: {site.textLine}
+            </Action>
+            <ComfortButton withLabel />
           </motion.div>
           <div className="mobile-menu__flowers" aria-hidden="true">
-            <Flower kind="bell" seed={3} />
-            <Flower kind="grass" seed={5} />
-            <Flower kind="umbel" seed={9} />
+            <Flower kind="daisy" seed={3} />
+            <Flower kind="lilac" seed={5} />
+            <Flower kind="dandelion" seed={9} />
           </div>
         </motion.div>
       )}
@@ -245,9 +234,9 @@ export function MobileCTA() {
           exit={{ y: "110%" }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Action link="requestAppointment">Request an appointment</Action>
+          <Action link="requestAppointment">Book now</Action>
           <Action link="patientPortal" variant="secondary" sprout={false} className="mobile-cta__portal">
-            Portal
+            Client portal
           </Action>
         </motion.div>
       )}

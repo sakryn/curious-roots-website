@@ -21,6 +21,9 @@ export function practiceJsonLd() {
     url: site.url,
     founder: { "@type": "Person", name: site.clinician, honorificSuffix: site.postNominals },
     faxNumber: site.fax,
+    telephone: "+1-484-650-3368",
+    logo: `${site.url}/brand/logo-full.png`,
+    image: `${site.url}/images/og.jpg`,
     areaServed: `${site.town}, ${site.state}`,
     address: {
       "@type": "PostalAddress",

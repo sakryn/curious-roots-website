@@ -1,77 +1,98 @@
 import type { LinkKey } from "@/config/links";
 
 /**
- * Homepage copy, written in Sarah's voice.
- * DRAFT: Sarah should read every line and change anything that doesn't
- * sound like her. Nothing here states a fact about her history or training.
+ * Homepage copy, built from Sarah's current site and her own words.
+ * Edit freely: every line on the homepage lives in this file.
  */
 
 export const hero = {
+  kicker: "Curious Roots Wellness · Sarah Snyder, LCSW",
   headline: ["Healing from", "the roots up."],
-  sub: "Trauma-informed, neurodivergent-affirming therapy with Sarah Snyder in Sinking Spring, Pennsylvania.",
+  sub: "Trauma-informed, neurodivergent-affirming therapy for children, teens and adults.",
   support:
-    "I work with kids, teens, adults and families who are sorting through trauma, ADHD, autism, grief, and the big feelings that tend to come along with all of it.",
-  primary: { label: "Request an appointment", link: "requestAppointment" as LinkKey },
+    "Therapy here is about more than managing symptoms. Together we get curious about the roots: how what you've lived through shows up in your mind, your body, your relationships and your everyday life. Then we build practical tools for change.",
+  where: "In person in Sinking Spring, PA, and by telehealth anywhere in Pennsylvania.",
+  primary: { label: "New here? Book now", link: "requestAppointment" as LinkKey },
   secondary: { label: "Meet Sarah", link: "meetSarah" as LinkKey },
 };
 
 export const fit = {
-  heading: "Is this the kind of therapy you're looking for?",
-  intro: "Most people find me for one of these four reasons. Plenty arrive with more than one.",
+  heading: "Support for where you are right now.",
+  intro: "Most people find me for one of these. Plenty arrive with more than one, and that's okay.",
   forYouIfLabel: "This might be for you if",
+  also: "I also help with anxiety and emotional overwhelm, depression and mood, self-esteem, stress and burnout, and feeling stuck.",
+};
+
+export const looks = {
+  label: "What therapy can look like",
+  heading: "Therapy doesn't have to look one way.",
+  intro: "Depending on what you need, our work together may include:",
+  closing: "Your therapy should fit you, not the other way around.",
+  items: [
+    { title: "Understanding your nervous system", body: "Why your body reacts the way it does, and how to work with it instead of against it." },
+    { title: "ADHD + executive functioning strategies", body: "Systems for time, focus, follow-through and overwhelm that fit how your brain actually works." },
+    { title: "Self-understanding + self-compassion", body: "Trading the inner critic for curiosity about why you do what you do." },
+    { title: "Emotional regulation skills", body: "Ways to ride out big feelings without being swept away by them." },
+    { title: "Mindfulness + grounding", body: "Small, doable ways to come back to the present when things feel like too much." },
+    { title: "Processing difficult experiences", body: "At your pace, once there's enough steadiness to do it safely." },
+    { title: "Practical tools for everyday life", body: "Something to try on Tuesday, not only insight." },
+    { title: "Exploring patterns + triggers", body: "Noticing what sets things off, and the old survival strategies underneath." },
+    { title: "Body-based, somatic approaches", body: "Breath, movement and noticing, because healing isn't only a thinking exercise." },
+    { title: "Relationships + communication", body: "Saying what you need, setting boundaries, and feeling more connected." },
+  ],
 };
 
 export const about = {
-  heading: "Hi, I'm Sarah.",
+  heading: "Hi, I'm Sarah. I'm so glad you're here.",
   paragraphs: [
-    "I started Curious Roots because I kept meeting people who had been told, one way or another, that they were too much. Too sensitive, too distracted, too stuck. Most of them weren't any of those things. They were having very reasonable reactions to brains and histories nobody had taken the time to understand.",
-    "So that's where I start: curious, not corrective. I pay close attention to what your nervous system is telling us, I'm comfortable with tangents (some of the best work happens there), and I'll be honest with you about what I'm noticing.",
+    "If you've found your way here, something may feel heavy, uncertain or overwhelming right now. You don't have to carry it alone. I created Curious Roots to be a place where you can take a deep breath, where you don't need to have everything figured out, and where therapy feels human instead of cold or clinical.",
+    "I'm also a therapist with ADHD. I wasn't diagnosed until I was 20, after years of being told to try harder and stop talking. So when I say I'm neurodivergent-affirming, I mean it personally as well as professionally.",
   ],
   promises: [
     { title: "Fidgeting welcome", body: "Bring the fidget, the snack, the restless leg." },
-    { title: "Breaks are fine", body: "Need a minute? Take it. No explanation required." },
-    { title: "Ask me anything", body: "Questions about how therapy works are always fair game." },
+    { title: "Your pace", body: "'Not today' is always an answer." },
+    { title: "No one-size-fits-all", body: "We tailor the work to you, not the other way around." },
   ],
-  credentialsLabel: "The formal stuff",
+  credentialsLabel: "Credentials + training",
   link: { label: "More about me", link: "about" as LinkKey },
 };
 
 export const approach = {
   heading: "How I work",
-  center: "There isn't one right way for a brain or a nervous system to work.",
+  center: "Curiosity, compassion + collaboration.",
   nodes: [
-    { id: "trauma", title: "Trauma-informed", body: "We go at a pace your body can handle. 'Not today' is always allowed." },
-    { id: "nd", title: "Neurodivergent-affirming", body: "Different isn't broken. We build around how you actually work." },
-    { id: "relational", title: "Relational", body: "The relationship is part of the work, so I show up as a real person." },
-    { id: "practical", title: "Practical", body: "You leave with something to try on Tuesday, not only insight." },
-    { id: "nervous", title: "Nervous-system aware", body: "We notice what your body is doing, then work with it." },
-    { id: "individual", title: "Individualized", body: "No script. The plan fits your age, your family, your goals." },
+    { id: "trauma", title: "Trauma-informed", body: "Safety, choice and pacing come first. You lead; I follow your nervous system's cues." },
+    { id: "nd", title: "Neurodivergent-affirming", body: "We build a life that fits your brain, not one that makes you look more typical." },
+    { id: "relational", title: "Collaborative", body: "Genuine and rooted in trust. I bring the clinical knowledge; you're the expert on you." },
+    { id: "practical", title: "Practical", body: "You leave with real tools for home, school, work and relationships." },
+    { id: "nervous", title: "Body-aware", body: "Somatic, mindfulness-based work alongside the talking." },
+    { id: "individual", title: "Tailored", body: "I draw on ACT, CBT, IFS-informed and person-centered approaches, chosen for you." },
   ],
 };
 
 export const steps = {
-  heading: "What happens after you reach out",
-  intro: "No mystery, and no automatic booking. Here's the whole path.",
+  heading: "What happens when you reach out",
+  intro: "No phone tag, no mystery. Here's the whole path.",
   items: [
     {
-      title: "See if we're a fit",
-      body: "Look around. If something here sounds like you, that's usually a good sign.",
+      title: "Take a look around",
+      body: "If something here sounds like you, that's usually a good sign. You don't need to know exactly what you need.",
       note: null as string | null,
     },
     {
-      title: "Request an appointment",
-      body: "A short, secure form. It goes to my practice system, not an inbox.",
-      note: "Connects to your EHR's secure intake form.",
+      title: "Book, text or send a note",
+      body: "Book a first appointment through Jane, text my line, or send a note through the contact form. Whatever's easiest for you.",
+      note: null as string | null,
     },
     {
-      title: "I review every request",
-      body: "I read what you share myself. If I'm the right fit, I'll reach out personally to set things up.",
-      note: "You stay in control. Requests wait for your review; nothing books itself.",
+      title: "I follow up personally",
+      body: "There's no front desk here. I read every message myself and get back to you as soon as I'm out of session.",
+      note: null as string | null,
     },
     {
       title: "We begin",
-      body: "Scheduling, paperwork and secure messages all live in the client portal from here.",
-      note: "Hands off to your EHR's patient portal.",
+      body: "Your paperwork, scheduling and secure messages all live in the Jane client portal from there.",
+      note: null as string | null,
     },
   ],
 };
@@ -80,12 +101,12 @@ export const frontDesk = {
   heading: "Where things stand",
   availabilityLabel: "Current availability",
   demoLabel: "Demo states",
-  demoHint: "Prototype preview. Tap to see each version. Sarah changes this with one word in the settings file.",
+  demoHint: "",
   portal: {
     heading: "Already working with me?",
-    body: "Everything between sessions lives in one secure place.",
+    body: "Everything between sessions lives in one secure place on Jane.",
     features: ["Schedule or reschedule", "Fill out paperwork", "Send a secure message"],
-    cta: { label: "Open the patient portal", link: "patientPortal" as LinkKey },
+    cta: { label: "Sign in to the client portal", link: "patientPortal" as LinkKey },
   },
 };
 
@@ -96,26 +117,28 @@ export const partnershipsCopy = {
 
 export const faqCopy = {
   heading: "Questions people usually ask",
-  intro: "If yours isn't here, it can go in your appointment request.",
+  intro: "If yours isn't here, text me or send a note. Questions are always fair game.",
 };
 
 export const location = {
   heading: "Finding me",
   officeLabel: "Office",
+  textLabel: "Text line",
   faxLabel: "Fax",
-  privacyHeading: "Why there's no email or phone number here",
-  privacyBody:
-    "So your private information goes through a secure channel from the very first message. The request form gets to me just as quickly.",
+  hoursLabel: "Hours",
+  textHeading: "Why a text line?",
+  textBody:
+    "I'm a solo practice with no one at a front desk, and I can't pick up while I'm in session. Calls go to voicemail; a text reaches me faster. Send me a text and we'll find a time to talk.",
 };
 
 export const education = {
-  heading: "Looking for consultation or training?",
-  body: "I also work with clinicians, schools and organizations who want to understand ADHD and neurodivergence better, and with parents who could use a thinking partner.",
+  heading: "Specialized support beyond the therapy room.",
+  body: "I also consult with clinicians, schools and organizations about ADHD, neurodivergence and trauma, and support parents and adults who want practical, everyday strategies.",
   offerings: [
-    { title: "Professional consultation", body: "Case consultation for clinicians and helping professionals." },
-    { title: "ADHD + neurodiversity education", body: "Clear, practical teaching without the jargon." },
-    { title: "Parent support", body: "For parents who want a plan that fits their particular kid." },
-    { title: "Custom training", body: "Built for schools and organizations, around your real situations." },
+    { title: "Clinical consultation", body: "For mental health professionals: case conceptualization, assessment and ADHD-focused services." },
+    { title: "School + organizational consultation", body: "Staff consultation, student support and professional development." },
+    { title: "ADHD education + parent support", body: "Practical strategies for routines, regulation, school, work and relationships." },
+    { title: "Custom training", body: "ADHD, neurodiversity, trauma-informed care and emotional regulation for your team." },
   ],
-  cta: { label: "Explore education + consultation", link: "consultation" as LinkKey },
+  cta: { label: "Explore consultation + education", link: "consultation" as LinkKey },
 };

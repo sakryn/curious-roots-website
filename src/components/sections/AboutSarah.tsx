@@ -8,13 +8,12 @@ import { site } from "@/config/site";
 import { Action } from "@/components/ui/Action";
 import { Rich } from "@/components/ui/Rich";
 import { Reveal } from "@/components/ui/Reveal";
-import { PrototypeNote } from "@/components/ui/PrototypeNote";
 import { Chevron, Sprig } from "@/components/botanicals/Glyphs";
 import { Flower } from "@/components/botanicals/Wildflowers";
 import { Parallax, RootGrow } from "@/components/botanicals/Motion";
 
 /** Set to "/images/sarah.jpg" (in /public) once Sarah sends a photo. */
-const PHOTO_SRC: string | null = null;
+const PHOTO_SRC: string | null = "/images/sarah.jpg";
 
 /** An oval plate frame, like a portrait tipped into an old naturalist's book. */
 const OVAL = "M200 22 C302 22 368 112 368 214 C368 316 298 386 200 386 C102 386 32 316 32 214 C32 112 98 22 200 22Z";
@@ -30,13 +29,13 @@ function PortraitFrame() {
               <path d={OVAL} />
             </clipPath>
             <linearGradient id={`ph-${clipId}`} x1="0" y1="0" x2="0.6" y2="1">
-              <stop offset="0" stopColor="#d6dbbf" />
-              <stop offset="1" stopColor="#a7b48a" />
+              <stop offset="0" stopColor="#d4d9c7" />
+              <stop offset="1" stopColor="#a9b49f" />
             </linearGradient>
           </defs>
           <g clipPath={`url(#oval-${clipId})`}>
             {PHOTO_SRC ? (
-              <image href={PHOTO_SRC} x="0" y="0" width="400" height="410" preserveAspectRatio="xMidYMid slice" />
+              <image href={PHOTO_SRC} x="0" y="-10" width="400" height="430" preserveAspectRatio="xMidYMin slice" />
             ) : (
               <>
                 <rect width="400" height="410" fill={`url(#ph-${clipId})`} />
@@ -51,24 +50,24 @@ function PortraitFrame() {
         </svg>
         {!PHOTO_SRC && <span className="portrait__label">Sarah&rsquo;s photo here</span>}
         <Parallax speed={0.22} className="portrait__spray portrait__spray--a">
-          <Flower kind="fern" seed={31} />
+          <Flower kind="lilac" seed={31} />
         </Parallax>
         <Parallax speed={0.1} className="portrait__spray portrait__spray--b">
-          <Flower kind="umbel" seed={14} />
+          <Flower kind="daisy" seed={14} />
         </Parallax>
         <Parallax speed={0.16} className="portrait__spray portrait__spray--c">
-          <Flower kind="grass" seed={22} />
+          <Flower kind="dandelion" seed={22} />
         </Parallax>
         <RootGrow variant="low" className="portrait__roots" />
       </div>
       <figcaption className="plate-caption">
-        <span>Pl. II.</span> Sarah Snyder, therapist
+        <span>Pl. II.</span> Sarah Snyder, {site.postNominals}
       </figcaption>
     </figure>
   );
 }
 
-export function AboutSarah() {
+export function AboutSarah({ heading, paragraphs, showMore = true }: { heading?: string; paragraphs?: string[]; showMore?: boolean } = {}) {
   const [open, setOpen] = useState(false);
   const credId = useId();
   return (
@@ -82,10 +81,10 @@ export function AboutSarah() {
           <Reveal>
             <Label n="II">Meet Sarah</Label>
             <h2 id="about-title" className="section-title about__title">
-              {about.heading}
+              {heading ?? about.heading}
             </h2>
           </Reveal>
-          {about.paragraphs.map((p, i) => (
+          {(paragraphs ?? about.paragraphs).map((p, i) => (
             <Reveal key={i} delay={0.08 * (i + 1)}>
               <p className={i === 0 ? "about__lede" : ""}>{p}</p>
             </Reveal>
@@ -132,15 +131,14 @@ export function AboutSarah() {
             </AnimatePresence>
           </div>
 
-          <div className="about__actions">
-            <Action link={about.link.link} variant="secondary" sprout={false}>
-              {about.link.label}
-            </Action>
-          </div>
+          {showMore && (
+            <div className="about__actions">
+              <Action link={about.link.link} variant="secondary" sprout={false}>
+                {about.link.label}
+              </Action>
+            </div>
+          )}
 
-          <PrototypeNote>
-            Draft copy in Sarah&rsquo;s voice. Nothing here states a fact about her history; she should rewrite anything that doesn&rsquo;t sound like her.
-          </PrototypeNote>
         </div>
       </div>
     </section>
